@@ -1,0 +1,28 @@
+<form action="/prueba" method="POST">
+    <input id="nom" type="text" name="nombre">
+    <button  type="submit" >Enviar</button>
+</form>
+
+
+<div>
+    {{#with testUser}}
+    <h1> Hola {{name}} {{apellido}} mundo</h1>
+    {{/with}}
+</div>
+<div>
+    <ul>
+        {{#each arreglo}}
+        <li>{{nombre1}} {{apellido1}} {{edad}}</li>
+        {{/each}}
+    </ul>
+    
+</div>
+
+<p>Productos</p>
+<div>
+        {{nombre}} {{precio}}
+        {{#with producto}}
+        <p>{{nombre}} {{precio}}</p>
+        {{/with}}
+
+</div>
