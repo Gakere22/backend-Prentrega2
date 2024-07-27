@@ -4,7 +4,7 @@ import fs from 'fs'
 
 import { ruta, getNextId, saveCartsOnFile,} from '../../gestion-archivos/carts.js'
 
-import { getDataFromFile} from '../../gestion-archivos/general.js'
+import  {getDataFromFile} from '../../gestion-archivos/general.js'
 
 
 //const express = require("express")

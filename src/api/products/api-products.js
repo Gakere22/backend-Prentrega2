@@ -1,8 +1,7 @@
 
 import express from 'express'
-import fs from 'fs'
 import {saveProductsOnFile, updateProduct, getNextId, ruta  } from '../../gestion-archivos/productos.js'
-import { getDataFromFile} from '../../gestion-archivos/general.js'
+import {getDataFromFile} from '../../gestion-archivos/general.js'
 
 
 
@@ -100,6 +99,33 @@ routerProducts.get("/products", (req,res)=>{
     */
 
 
+routerProducts.get("/", (req,res)=>{
+     
+    let {limit} = req.query;
+    const products = getDataFromFile(ruta)
+    
+    if(products.length !== 0){
+        
+        if(limit){
+            limit = parseInt(limit)
+            if(limit < products.length) {
+                let productosFiltrados = products.slice(limit)
+                res.json({...productosFiltrados})
+            }else{
+                res.json({message:" el parametro pasado como limiete supera la cantidad de productos exitentes"})
+            }          
+        }else{
+            //let producto = [{nombre: "tomate", precio: 10}, {nombre: "pera", precio: 20}]
+            res.render("realTimeProducts", {products})
+        }
+    }else{
+        res.send({status:"error", message:"No hay productos "})
+    }
+    
+})
+
+
+
 
 routerProducts.get("/products", (req,res)=>{
      
@@ -118,7 +144,7 @@ routerProducts.get("/products", (req,res)=>{
             }          
         }else{
             //let producto = [{nombre: "tomate", precio: 10}, {nombre: "pera", precio: 20}]
-            res.render("products", {products})
+            res.render("realTimeProducts", {products})
         }
     }else{
         res.send({status:"error", message:"No hay productos "})

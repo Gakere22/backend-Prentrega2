@@ -33,5 +33,5 @@ async function createInitialBase (ruta, arreglo)  {
 
 } 
 
-export {getDataFromFile}
+export  {getDataFromFile}
 

@@ -4,9 +4,11 @@ import __dirname from "./utils.js"
 import fs from 'fs'
 import routerCarts from "./api/carts/api-carts.js"
 import routerProducts from './api/products/api-products.js'
-
+import { Server } from 'socket.io'
 import {createInitialBaseCarts} from './gestion-archivos/carts.js'
 import{createInitialBaseProducts} from './gestion-archivos/productos.js'
+import { Socket } from 'socket.io'
+import socketProductsServer from './listeners/socketProductsServer.js'
 
 
 // cuando levantava express con cmmon js 
@@ -54,9 +56,6 @@ createInitialBaseCarts()
 //const carts = archivoGeneral.getDataFromFile(ruteCart)
 
 //console.log(carts)
-
-
-
 
 /*
 const datos = [
@@ -135,6 +134,8 @@ const app = express();
 app.use(express.json()) // esta linea es para poder enviar inpormacion en el body de la request
 app.use(express.urlencoded({extended: true}))  // esta linea es para que la aplicacion entienda los parametros que viajan por la url
 
+
+
 app.engine('handlebars', handlebars.engine());
 app.set('views',__dirname+'/views');
 app.set('view engine', 'handlebars');
@@ -193,5 +194,13 @@ app.use("/", routerCarts);
 
 
 
-const server = app.listen(PORT, ()=>(console.log("levanto el servidor")));
+const httpServer = app.listen(PORT, ()=>(console.log("levanto el servidor")));
 console.log("donde estoy")
+
+const io = new Server(httpServer)
+
+socketProductsServer(io)
+
+
+
+

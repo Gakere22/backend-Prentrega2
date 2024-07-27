@@ -1,3 +1,6 @@
+
+
+
 <form action="/prueba" method="POST">
     <input id="nom" type="text" name="nombre">
     <button  type="submit" >Enviar</button>
@@ -20,9 +23,19 @@
 
 <p>Productos</p>
 <div>
-        {{nombre}} {{precio}}
-        {{#with producto}}
-        <p>{{nombre}} {{precio}}</p>
-        {{/with}}
+       
+        {{#each products}}
+        <div id="{{id}}" class="title" style="display: flex;">
+                <div class="category">Categoria {{category}}</div>
+                <div class="name"> Producto:  {{name}}</div>
+                <div class="description">Descripcion: {{Descripcion}}</div>
+                <div class="price"> Precio: {{price}}</div> 
+                <div class="stock">Stock:{{stock}}</div>
+        </div>         
+        {{/each}}
+        
 
 </div>
+
+
+
