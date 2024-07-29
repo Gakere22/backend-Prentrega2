@@ -4,12 +4,13 @@ import __dirname from "./utils.js"
 import fs from 'fs'
 import routerCarts from "./api/carts/api-carts.js"
 import routerProducts from './api/products/api-products.js'
+import { routerRealTime } from './api/realTime/realTimeProducts.js'
 import { Server } from 'socket.io'
 import {createInitialBaseCarts} from './gestion-archivos/carts.js'
 import{createInitialBaseProducts} from './gestion-archivos/productos.js'
 import { Socket } from 'socket.io'
 import socketProductsServer from './listeners/socketProductsServer.js'
-
+import { socketRealTimePro } from './api/realTime/realTimeProducts.js'
 
 // cuando levantava express con cmmon js 
 //const express = require('express');
@@ -137,10 +138,10 @@ app.use(express.urlencoded({extended: true}))  // esta linea es para que la apli
 
 
 app.engine('handlebars', handlebars.engine());
-app.set('views',__dirname+'/views');
+app.set('views',__dirname +'/views');
 app.set('view engine', 'handlebars');
 
-app.use(express.static(__dirname+'/public'))
+app.use(express.static(__dirname +'/public'))
 
 
 let testUser = {
@@ -148,6 +149,7 @@ let testUser = {
     apellido: 'varas'
 
 }
+  
 
 let arreglo = [{
         nombre1: "nahuel",
@@ -170,7 +172,7 @@ let arreglo = [{
 app.get('/prueba',(req,res)=> {
 
     
-    res.render("home", testUser);
+    res.render("home", {testUser, arreglo}) 
 })
     
 
@@ -181,7 +183,7 @@ app.post("/prueba",(req,res)=> {
     console.log(dato)
     testUser.name = dato.nombre
     
-    res.render("home", {testUser, arreglo});
+    res.render("home", {testUser})
 
 })
 
@@ -191,15 +193,19 @@ const PORT = 8080;
 
 app.use("/", routerProducts);
 app.use("/", routerCarts);
+app.use("/", routerRealTime);
 
 
 
-const httpServer = app.listen(PORT, ()=>(console.log("levanto el servidor")));
+const httpServer = app.listen(PORT, ()=>(console.log("levanto el servidor")))
 console.log("donde estoy")
 
 const io = new Server(httpServer)
 
+
 socketProductsServer(io)
+socketRealTimePro(io)
+
 
 
 

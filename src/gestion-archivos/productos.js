@@ -38,7 +38,7 @@ import {getDataFromFile} from "./general.js"
     function saveProductsOnFile(products){//ruta
          try {
             fs.writeFileSync(ruta, JSON.stringify(products),null, 2)
-            
+         
         } catch (error) {
             
         }

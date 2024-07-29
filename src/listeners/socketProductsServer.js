@@ -1,11 +1,13 @@
 import {getDataFromFile} from "../gestion-archivos/general.js"
 import {ruta} from "../gestion-archivos/productos.js"
 
+
+
 const socketProductsServer = (io)=>{
 
     io.on('connection', socket=>{
     
-        console.log("Nuevo Cliente conectado: " +socket.id)
+        console.log("Nuevo Cliente conectado: " + socket.id)
         /*
         socket.on("disconnect", ()=>{
             console.log("se deconecto usuario:  "+ socket.id)
@@ -15,7 +17,6 @@ const socketProductsServer = (io)=>{
             console.log (data)
             const prod = getDataFromFile(ruta)
             console.log("productos en socket")
-            console.log(prod)
             io.emit("vaProductos", prod )
         })
         /*
@@ -25,9 +26,11 @@ const socketProductsServer = (io)=>{
             io.emit("productsActual",await getDataFromFile() )
         })
         */
+      
     })
-
+  
 } 
+
 
 
 

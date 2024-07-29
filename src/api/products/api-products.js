@@ -72,7 +72,7 @@ routerProducts.put ("/products/:pid", (req,res)=>{
 
 
 
-/*
+
 routerProducts.get("/products", (req,res)=>{
      
     let {limit} = req.query;
@@ -96,7 +96,7 @@ routerProducts.get("/products", (req,res)=>{
     }
     
 })
-    */
+   
 
 
 routerProducts.get("/", (req,res)=>{
@@ -116,7 +116,7 @@ routerProducts.get("/", (req,res)=>{
             }          
         }else{
             //let producto = [{nombre: "tomate", precio: 10}, {nombre: "pera", precio: 20}]
-            res.render("realTimeProducts", {products})
+            res.render("home", "")
         }
     }else{
         res.send({status:"error", message:"No hay productos "})
@@ -175,6 +175,9 @@ routerProducts.get("/products/:pid", (req,res)=>{
 routerProducts.post("/products", (req,res)=>{
             
             const data = req.body
+            console.log("mostrar la data")
+            console.log(data)
+            console.log(data.title)
             let product= {};
             let nextId = getNextId()
             if (data.title){
@@ -194,8 +197,10 @@ routerProducts.post("/products", (req,res)=>{
                                             category: data.category,
                                             thumbnalis:  Boolean(data.thumbnalis)? data.thumbnalis : null 
                                         }
-                                     
-                                       
+                                        updateProduct (product, ruta);
+                                        nextId++      
+                                        res.send({status: "succes", mensaje:"Se dio de alta el producto"})
+
                                     }else{
                                         res.send({status: "error", mensaje:"El campo category es obligatorio"})
                                     }
@@ -216,15 +221,10 @@ routerProducts.post("/products", (req,res)=>{
                 }
 
             }else{
-                res.send({status: "error", mensaje:"El campo Name es obligatorio"})
+                res.send({status: "error", mensaje:"El campo Title es obligatorio"})
             }
 
-          updateProduct (product, ruta);
-          nextId++
-          
-          res.send({status: "succes", mensaje:"Se dio de alta el producto"})
-        
-            
+           
 })
 
 
